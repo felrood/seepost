@@ -1,0 +1,37 @@
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <termios.h>
+#include <unistd.h>
+#include <simpleini/SimpleIni.h>
+#include <clientconfig/clientconfig.h>
+#include <cryptlib/cryptlib.h>
+#include "command/command.h"
+#include <clientapplication/clientapplication.h>
+#include <bobcat/log>
+
+struct Args {
+    std::string config_file;
+    bool verbose;
+};
+
+
+// client.cc
+void usage();
+Args parseArgv(int argc, char **argv);
+
+// readPassword.cc
+std::string readPassword(std::string const &question);
+
+
+void loop();
+bool process(std::string &line);
+void cmd_help();
+void cmd_list(size_t length);
+void cmd_read(size_t msg_id);
+
+using namespace std;
+using namespace Botan;
+using namespace SEEPost;
+using namespace FBB;

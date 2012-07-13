@@ -1,0 +1,25 @@
+#include "interserverconnection.h"
+#include <botan/dh.h>
+#include <botan/auto_rng.h>
+#include <botan/pubkey.h>
+#include "../memvector.h"
+#include "../account/account.h"
+#include "../accountstore/accountstore.h"
+#include "../serverconfig/serverconfig.h"
+#include "../connection/connection.h"
+#include <streambuf>
+#include <ostream>
+#include <botan/rsa.h>
+#include <bobcat/log>
+#include <bobcat/datetime>
+#include "../serverscanner/scanner.h"
+#include "../serverparser/parser.h"
+#include "../blob/blob.h"
+#include "../blobstore/blobstore.h"
+#include "../interserverclient/interserverclient.h"
+#include "../keyfetcher/keyfetcher.h"
+
+using namespace std;
+using namespace FBB;
+using namespace Botan;
+

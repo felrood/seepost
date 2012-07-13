@@ -1,0 +1,66 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+	echo "Usage: serverkeygen <keyname>"
+	exit
+fi
+
+echo -n "Serveraddress/name: "
+read name
+
+echo -n "Port: "
+read port
+
+mkdir $1
+cd $1
+
+touch config.skf
+
+echo "[server]" >> config.skf
+echo -n "name = " >> config.skf
+echo $name >> config.skf
+echo -n "port = " >> config.skf
+echo $port >> config.skf
+
+openssl genrsa -out sign_priv.pem 2048 > /dev/null 2> /dev/null
+openssl rsa -in sign_priv.pem -pubout > sign_pub.pem 2> /dev/null
+
+openssl genrsa -out enc_priv.pem 2048 > /dev/null 2> /dev/null
+openssl rsa -in enc_priv.pem -pubout > enc_pub.pem 2> /dev/null
+
+openssl pkcs8 -topk8 -nocrypt -in sign_priv.pem -out sign_priv2.pem > /dev/null 2> /dev/null
+openssl pkcs8 -topk8 -nocrypt -in enc_priv.pem -out enc_priv2.pem > /dev/null 2> /dev/null
+
+
+echo "sign_priv = <<<END" >> config.skf
+cat sign_priv2.pem >> config.skf
+echo "END" >> config.skf
+
+echo "sign_pub = <<<END" >> config.skf
+cat sign_pub.pem >> config.skf
+echo "END" >> config.skf
+
+echo "enc_priv = <<<END" >> config.skf
+cat enc_priv2.pem >> config.skf
+echo "END" >> config.skf
+
+echo "enc_pub = <<<END" >> config.skf
+cat enc_pub.pem >> config.skf
+echo "END" >> config.skf
+
+
+echo "sign_pub = <<<END" >> config.pkf
+cat sign_pub.pem >> config.pkf
+echo "END" >> config.pkf
+
+echo "enc_pub = <<<END" >> config.pkf
+cat enc_pub.pem >> config.pkf
+echo "END" >> config.pkf
+
+rm *.pem
+
+mkdir inqueue
+mkdir accounts
+mkdir blobstore
+
+cd ..

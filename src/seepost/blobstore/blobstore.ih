@@ -1,0 +1,10 @@
+#include "blobstore.h"
+#include <blob/blob.h>
+
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <glob.h>
+#include <cstdio>
+
+using namespace std;

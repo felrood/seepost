@@ -1,0 +1,29 @@
+#& -a "-std=c++0x -Wall"
+botan/ber_dec.h 
+botan/botan.h	`pkg-config --cflags --libs botan-1.10`
+botan/pem.h	
+botan/pkcs8.h	
+botan/rsa.h 
+botan/lookup.h 
+botan/filters.h 
+cryptlib/cryptlib.h	-Iseepost -L./seepost -lseepost `pkg-config --cflags --libs botan-1.10`
+simpleini/SimpleIni.h	-Ivendor
+termios.h	
+unistd.h	
+stdlib.h 
+clientconfig/clientconfig.h	-Iseepost -L./seepost -lseepost
+serverconfig/serverconfig.h	-Iseepost -L./seepost -lseepost
+account/account.h	
+accountstore/accountstore.h	
+blob/blob.h	
+blobstore/blobstore.h	
+clientapplication/clientapplication.h	-Iseepost -L./seepost -lseepost -lbobcat `pkg-config --cflags --libs botan-1.10` -Ivendor -lldns
+serverconnection/serverconnection.h	-Iseepost -L./seepost -lseepost -lbobcat `pkg-config --cflags --libs botan-1.10` -lldns
+bobcat/log 
+thread -pthread -lpthread
+interserver/interserver.h 
+keyserver/keyserver.h 
+clientconnection/clientconnection.h 
+utils/utils.h 
+bobcat/datetime -lbobcat
+

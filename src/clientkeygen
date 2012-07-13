@@ -1,0 +1,104 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+	echo "Usage: clientkeygen <keyname>"
+	exit
+fi
+
+echo -n "Name: "
+read name
+
+echo -n "Email address: "
+read address
+
+echo -n "Servername: "
+read server
+
+echo -n "Port: "
+read port
+
+touch $1.skf
+
+echo "[account]" >> $1.skf
+echo -n "name = " >> $1.skf
+echo $name >> $1.skf
+echo -n "address = " >> $1.skf
+echo $address >> $1.skf
+echo -n "server = " >> $1.skf
+echo $server >> $1.skf
+echo -n "port = " >> $1.skf
+echo $port >> $1.skf
+
+cp $1.skf $1.pkf
+
+mkdir $1
+cd $1
+
+openssl genrsa -out sign_priv.pem 2048 > /dev/null 2> /dev/null
+openssl rsa -in sign_priv.pem -pubout > sign_pub.pem 2> /dev/null
+
+openssl genrsa -out enc_priv.pem 2048 > /dev/null 2> /dev/null
+openssl rsa -in enc_priv.pem -pubout > enc_pub.pem 2> /dev/null
+
+openssl pkcs8 -topk8 -nocrypt -in sign_priv.pem -out sign_priv2.pem > /dev/null 2> /dev/null
+openssl pkcs8 -topk8 -nocrypt -in enc_priv.pem -out enc_priv2.pem > /dev/null 2> /dev/null
+
+
+echo "sign_priv = <<<END" >> ../$1.skf
+cat sign_priv2.pem >> ../$1.skf
+echo "END" >> ../$1.skf
+
+echo "sign_pub = <<<END" >> ../$1.skf
+cat sign_pub.pem >> ../$1.skf
+echo "END" >> ../$1.skf
+
+echo "enc_priv = <<<END" >> ../$1.skf
+cat enc_priv2.pem >> ../$1.skf
+echo "END" >> ../$1.skf
+
+echo "enc_pub = <<<END" >> ../$1.skf
+cat enc_pub.pem >> ../$1.skf
+echo "END" >> ../$1.skf
+
+
+echo "sign_pub = <<<END" >> ../$1.pkf
+cat sign_pub.pem >> ../$1.pkf
+echo "END" >> ../$1.pkf
+
+echo "enc_pub = <<<END" >> ../$1.pkf
+cat enc_pub.pem >> ../$1.pkf
+echo "END" >> ../$1.pkf
+
+port2=$(echo "$port + 1" | bc)
+
+echo -e "SEEPOST RESOLVER 1\nGET $server\nQUIT" | nc $server $port2 > "$server.pub"
+
+lines=$(cat "$server.pub" | wc -l)
+
+if [ $lines -lt 3 ]; then
+    echo 'Error: Server key not found'
+    cd ..
+    rm -rf $1
+    exit
+fi
+
+lines2=$(echo "$lines - 2" | bc)
+
+cat "$server.pub" | tail -n "$lines2" > "$server.pub2"
+
+mv "$server.pub2" "$server.pub"
+
+echo "server_pub = <<<END" >> ../$1.skf
+cat "$server.pub" >> ../$1.skf
+echo "END" >> ../$1.skf
+
+cd ..
+
+rm -rf $1
+
+if [ -z $2 ]; then
+    while [ ! -r $1.skf ]; do
+        openssl enc -aes-256-cbc -in $1.skf -out $1.skf -salt
+    done
+fi
+

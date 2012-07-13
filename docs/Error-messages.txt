@@ -1,0 +1,31 @@
+Error messages
+
+A-xxx Handshake
+
+* A-100 Invalid header
+* A-101 Unsupported protocol version
+* A-102 Wrong server
+
+B-xxx Client - Server
+
+* B-100 Account not known!
+* B-101 Cannot send message
+* B-404 Blob not found
+
+C-xxx Interserver
+
+* C-100 Cannot connect to server
+* C-101 Syntax error
+* C-102 Command unknown
+* C-404 User Does not exist
+
+D-xxx Resolver
+
+* D-100 Cannot fetch key
+* D-101 Command unknown
+
+X-xxx Internal error
+
+* X-100 Parser error
+* X-101 Invalid call
+* X-666 Undefined error

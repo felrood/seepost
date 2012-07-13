@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cstdlib>
+#include <thread>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <termios.h>
+#include <unistd.h>
+#include <simpleini/SimpleIni.h>
+#include <serverconfig/serverconfig.h>
+#include <cryptlib/cryptlib.h>
+#include <accountstore/accountstore.h>
+#include <account/account.h>
+#include <blob/blob.h>
+#include <blobstore/blobstore.h>
+#include <serverconnection/serverconnection.h>
+#include <interserver/interserver.h>
+#include <bobcat/log>
+#include <keyserver/keyserver.h>
+
+
+struct Args {
+    std::string config_dir;
+    bool verbose;
+    bool local;
+};
+
+void usage();
+Args parseArgv(int argc, char *argv[]);
+std::string readPassword(std::string const &question);
+
+using namespace std;
+using namespace SEEPost;
+using namespace FBB;

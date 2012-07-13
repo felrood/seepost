@@ -1,0 +1,42 @@
+#&-a "-std=c++0x -Wall" 
+
+botan/ber_dec.h	`pkg-config --cflags --libs botan-1.10`
+botan/botan.h	`pkg-config --cflags --libs botan-1.10`
+botan/filters.h	`pkg-config --cflags --libs botan-1.10`
+botan/lookup.h	`pkg-config --cflags --libs botan-1.10`
+botan/pem.h	`pkg-config --cflags --libs botan-1.10`
+botan/pkcs8.h	`pkg-config --cflags --libs botan-1.10`
+botan/rsa.h	`pkg-config --cflags --libs botan-1.10`
+config/config.h	-I. `pkg-config --cflags --libs botan-1.10`
+simpleini/SimpleIni.h	-I../vendor
+seepost/account/account.h	-I.
+account/account.h	-I.
+glob.h	
+sys/socket.h	
+sys/types.h	
+blob/blob.h -I.
+blobstore/blobstore.h -I.
+bobcat/clientsocket	-lbobcat
+bobcat/ifdstream	-lbobcat
+bobcat/ofdstream	-lbobcat
+bobcat/serversocket	-lbobcat
+connection/clientconnection.h	-I. -L. -lseepost -lbobcat
+connection/serverconnection.h	-I. -L. -lseepost -lbobcat
+botan/auto_rng.h	`pkg-config --cflags --libs botan-1.10`
+botan/dh.h	`pkg-config --cflags --libs botan-1.10`
+botan/hmac.h	`pkg-config --cflags --libs botan-1.10`
+botan/pbkdf2.h	`pkg-config --cflags --libs botan-1.10`
+botan/pubkey.h	`pkg-config --cflags --libs botan-1.10`
+botan/secmem.h	`pkg-config --cflags --libs botan-1.10`
+botan/sha160.h	`pkg-config --cflags --libs botan-1.10`
+bobcat/log 
+queue/queue.h 
+sys/stat.h 
+thread 
+bobcat/socketbase 
+bobcat/errno 
+ldns/ldns.h -lldns
+stdio.h 
+regex.h 
+bobcat/datetime 
+cryptlib/cryptlib.h 

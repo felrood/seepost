@@ -1,0 +1,11 @@
+#include "clientconfig.h"
+
+#include <string>
+#include <botan/botan.h>
+#include <botan/pkcs8.h>
+#include <botan/rsa.h>
+#include <botan/pem.h>
+#include <botan/ber_dec.h>
+
+using namespace std;
+using namespace Botan;
