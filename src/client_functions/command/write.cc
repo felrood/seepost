@@ -7,7 +7,7 @@ bool Command::write(istringstream &stream, ClientApplication &app) {
 	getline(cin, address);
 
 	// TODO minder lelijke regexp maken
-	if(!match_regex("^[[:alnum:]][[:alnum:]\\._]*@[[:alnum:]][[:alnum:]]*\\.[[:alnum:]][[:alnum:]]*$", address)) {
+	if(!match_regex("^[[:alnum:]][[:alnum:]\\._]*@[[:alnum:]][[:alnum:]]*$", address)) {
 		cout << "Not a valid address" << endl;
 		return true;
 	}
