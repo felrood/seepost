@@ -56,3 +56,6 @@ These are some things that should be improved in the code
 - Merge the client\_functions, server\_functions and seepost library things together
 - More documentation
 
+License
+-------
+GPLv2, see license.txt
